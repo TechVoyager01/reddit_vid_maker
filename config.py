@@ -1,0 +1,6 @@
+# config.py
+REDDIT_CLIENT_ID = "uD06IyyzoicjG79bpO8hHQ"
+REDDIT_CLIENT_SECRET = "dlS54SShD0TkkraBsv52-5RVmlXYdQ"
+REDDIT_USER_AGENT = "video_maker"
+REDDIT_USERNAME = "North-Poet-2880"
+REDDIT_PASSWORD = "CodingCreative13"
