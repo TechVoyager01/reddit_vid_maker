@@ -1,7 +1,7 @@
 import praw
 import config
 
-# To get sign-in data from reddit scrapper
+# Initialize Reddit API
 reddit = praw.Reddit(
     client_id=config.REDDIT_CLIENT_ID,
     client_secret=config.REDDIT_CLIENT_SECRET,
@@ -10,14 +10,21 @@ reddit = praw.Reddit(
     password=config.REDDIT_PASSWORD
 )
 
-def fetch_top_post(subreddit_name):
-    """Fetch the top post from a subreddit"""
+
+def fetch_top_post(subreddit_name="AskReddit"):
+    """Fetches the top post from a subreddit"""
     subreddit = reddit.subreddit(subreddit_name)
-    post = next(subreddit.top("day", limit=1))
-    return post.title, post.selftext
+    post = next(subreddit.top(time_filter="day", limit=1))
+
+    return {
+        "title": post.title,
+        "body": post.selftext if post.selftext else "No text available",
+        "comments": [comment.body for comment in post.comments[:5]]
+    }
+
 
 if __name__ == "__main__":
-    title, body = fetch_top_post("AskReddit")
-    print("Title:", title)
-    print("Body:", body)
-
+    post = fetch_top_post("AskReddit")
+    print("Title:", post["title"])
+    print("Body:", post["body"])
+    print("Comments:", post["comments"])
